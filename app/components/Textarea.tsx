@@ -2,6 +2,7 @@ import TextareaAutosize from "react-textarea-autosize";
 import { useState } from "react";
 
 interface TextareaProps {
+  name: string;
   label?: string;
   description?: string | JSX.Element;
   minrows: number;
@@ -40,6 +41,7 @@ const Textarea = (props: TextareaProps) => {
       )}
       <TextareaAutosize
         className="mt-2"
+        name={props.name}
         placeholder={props.placeholder}
         minRows={props.minrows}
         required={props.required}

@@ -1,21 +1,42 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Input from "@/components/Input";
 import Textarea from "@/components/Textarea";
 import { Button, Select } from "@radix-ui/themes";
 
+interface Application {
+  name: string;
+  grade: string;
+  school: string;
+  reason: string;
+  skills: string;
+  idea: string;
+  source: string;
+  email: string;
+  link: string;
+}
+
 const page = () => {
 
-  const [name, setName] = useState<string>("")
-  const [grade, setGrade] = useState<string>("Grade 9")
-  const [school, setSchool] = useState<string>("")
-  const [reason, setReason] = useState<string>("")
-  const [skills, setSkills] = useState<string>("")
-  const [idea, setIdea] = useState<string>("")
-  const [source, setSource] = useState<string>("")
-  const [email, setEmail] = useState<string>("")
-  const [link, setLink] = useState<string>("")
+  const [application, setApplication] = useState<Application>({
+    name: "",
+    grade: "Grade 9",
+    school: "",
+    reason: "",
+    skills: "",
+    idea: "",
+    source: "",
+    email: "",
+    link: "",
+  });
+
+  useEffect(() => {
+    const savedApplication = localStorage.getItem('flowboat-application');
+    if (savedApplication) {
+      setApplication(JSON.parse(savedApplication));
+    }
+  }, []);
 
   const [status, setStatus] = useState<"No Changes" | "Saving" | "Saved" | "Submitted">("No Changes")
   const [statusColor, setStatusColor] = useState<"" | "text-red-400" | "text-yellow-400" | "text-blue-400" | "text-green-400" | "text-gray-400">("text-gray-400")
@@ -24,62 +45,53 @@ const page = () => {
     e.preventDefault();
 
     setStatus("Saving")
-
-    console.log(
-      name,
-      grade,
-      school,
-      reason,
-      skills,
-      idea,
-      source,
-      email,
-      link
-    )
-
-    setStatus("Saving")
     setStatusColor("text-yellow-400")
 
     setTimeout(() => {
-      localStorage.setItem("flowboat-application", JSON.stringify({
-        name,
-        grade,
-        school,
-        reason,
-        skills,
-        idea,
-        source,
-        email,
-        link
-      }))
+      localStorage.setItem("flowboat-application", JSON.stringify(application))
 
       setStatus("Saved")
       setStatusColor("text-green-400")
     }, 800)
+
+    try {
+      const response = await fetch('/api/append', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(application),
+      });
+
+      if (response.ok) {
+        console.log('Data written successfully');
+      } else {
+        const errorData = await response.json();
+        console.error(`Error: ${errorData.message}`);
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+    }
   }
 
   const onChange = (e: React.FormEvent<HTMLFormElement>) => {
-    if (status !== "Saving") {
-      setStatus("Saving")
-      setStatusColor("text-yellow-400")
+    setStatus("Saving")
+    setStatusColor("text-yellow-400")
 
-      setTimeout(() => {
-        localStorage.setItem("flowboat-application", JSON.stringify({
-          name,
-          grade,
-          school,
-          reason,
-          skills,
-          idea,
-          source,
-          email,
-          link
-        }))
+    const { name, value } = e.target as HTMLInputElement;
+    console.log(name)
 
-        setStatus("Saved")
-        setStatusColor("text-green-400")
-      }, 800)
-    }
+    setApplication({
+      ...application,
+      [name]: value,
+    });
+
+    setTimeout(() => {
+      localStorage.setItem("flowboat-application", JSON.stringify(application))
+
+      setStatus("Saved")
+      setStatusColor("text-green-400")
+    }, 800)
   }
 
   return (
@@ -89,13 +101,14 @@ const page = () => {
       <p>Accelerating the ideas of tomorrow.</p>
       { status && <p className={`text-xs ${statusColor}`}>• {status}</p> }
 
-      <form className="flex flex-col gap-8 mt-8" onSubmit={onSubmit} onChange={onChange}>
+      {/* {name} */}
+      <form className="flex flex-col gap-8 mt-8" onSubmit={onSubmit} onChange={onChange} onBlur={onChange}>
         <Input
           label="What is your full name?"
           requiredMessage="We all have names, I think."
           placeholder="You can call me..."
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          name="name"
+          value={application.name}
           required
         />
 
@@ -104,7 +117,7 @@ const page = () => {
           <p className="text-sm text-neutral-40">
             All Flowboat members are high school students.
           </p>
-          <Select.Root defaultValue="Grade 9" size="2" value={grade} onValueChange={(e) => setGrade(e)}>
+          <Select.Root name="grade" defaultValue="Grade 9" size="2" value={application.grade}> 
             <Select.Trigger />
             <Select.Content>
               <Select.Item value="Grade 9">Grade 9</Select.Item>
@@ -116,27 +129,28 @@ const page = () => {
         </div>
 
         <Input
+          name="school"
           label="What high school do you currently attend?"
           description="All applying members must be located in the Waterloo Region."
           requiredMessage="School name is required."
           placeholder="I currently attend..."
-          value={school}
-          onChange={(e) => setSchool(e.target.value)}
+          value={application.school}
           required
         />
 
         <Textarea
+          name="reason"
           label="Why are you looking to be a part of Flowboat this year?"
           description="Your response must be a minimum of 5 sentences."
           requiredMessage="Please type a minimum of 5 sentences."
           placeholder="Type your response here..."
           minrows={3}
-          value={reason}
-          onChange={(e) => setReason(e.target.value)}
+          value={application.reason}
           required
         />
 
         <Textarea
+          name="skills"
           label="What technological skills, business expertise or other valuable traits do you bring to the table? Explain your biggest accomplishments/experiences."
           description={
             <>
@@ -148,48 +162,47 @@ const page = () => {
           requiredMessage="Please type a minimum of 5 sentences."
           placeholder="Type your response here..."
           minrows={7}
-          value={skills}
-          onChange={(e) => setSkills(e.target.value)}
+          value={application.skills}
           required
         />
 
         <Input
+          name="idea"
           label="You're almost done! Please tell us about a cool startup idea you have in mind!"
           description="Anything! Don't worry if you think it isn't great."
           requiredMessage="Try to think of something!"
           placeholder="Only 0.3% of pitches..."
-          value={idea}
-          onChange={(e) => setIdea(e.target.value)}
+          value={application.idea}
           required
         />
 
         <Input
+          name="source"
           label="One last thing! How did you hear about Flowboat?"
           description="Anything! Don't worry if you think it isn't great."
           requiredMessage="Try to think of something!"
           placeholder="My friend ... told me"
-          value={source}
-          onChange={(e) => setSource(e.target.value)}
+          value={application.source}
           required
         />
 
         <Input
+          name="email"
           label="Now that you've finished up the paperwork, enter your email below so that we can contact you."
           description="Who doesn't have an email in 2024?"
           requiredMessage="Please enter a valid email address."
           placeholder="member@flowboat.ca"
           type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          value={application.email}
           required
         />
 
         <Input
+          name="link"
           label="Do you have a personal website, GitHub, portfolio or LinkedIn? Link it to us and we'll check it out!"
           description="This is entirely optional and will not negatively affect your application."
           placeholder="linkedin.com/in/..."
-          value={link}
-          onChange={(e) => setLink(e.target.value)}
+          value={application.link}
         />
 
         <Button className="mt-4" variant="surface" type="submit" loading={status == "Saving"}>

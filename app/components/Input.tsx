@@ -2,6 +2,7 @@ import { TextField } from "@radix-ui/themes";
 import { useState } from "react";
 
 interface InputProps {
+  name: string;
   label?: string;
   description?: string;
   placeholder?: string;
@@ -40,6 +41,7 @@ const Input = (props: InputProps) => {
       )}
       <TextField.Root
         size="3"
+        name={props.name}
         className={`mt-2 ${invalid ? "!outline-red-400" : ""}`}
         placeholder={props.placeholder}
         required={props.required}
@@ -49,6 +51,9 @@ const Input = (props: InputProps) => {
         }}
         value={props.value}
         onChange={(e) => {
+          onChange(e);
+        }}
+        onBlur={(e) => {
           onChange(e);
         }}
       />
