@@ -1,25 +1,25 @@
-@import '@radix-ui/themes/styles.css';
+@import "@radix-ui/themes/styles.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 body {
-  background-color: #1A1C1E;
+  background-color: #1a1c1e;
   color: #fff;
 }
 
 textarea {
   width: 100%;
   padding: 0.5rem;
-  border: 1px solid #54534D;
+  border: 1px solid #54534d;
   border-radius: 8px;
-  background-color: #0A0A0A;
+  background-color: #0a0a0a;
   outline: none;
 }
 textarea:focus {
-  outline: 2px solid #A35829;
+  outline: 2px solid #445db2;
   border: 1px solid transparent;
 }
 textarea::placeholder {
-  color: #85847D;
+  color: #85847d;
 }

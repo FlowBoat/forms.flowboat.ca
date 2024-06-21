@@ -22,7 +22,9 @@ const page = () => {
 
         <div className="flex flex-col gap-2">
           <label>What grade will you be entering in September 2024?</label>
-          <p className="text-sm text-neutral-40">All Flowboat members are high school students.</p>
+          <p className="text-sm text-neutral-40">
+            All Flowboat members are high school students.
+          </p>
           <Select.Root defaultValue="gr9" size="2">
             <Select.Trigger />
             <Select.Content>
@@ -53,7 +55,13 @@ const page = () => {
 
         <Textarea
           label="What technological skills, business expertise or other valuable traits do you bring to the table? Explain your biggest accomplishments/experiences."
-          description={<>You can discuss clubs, projects and organizations you have taken part in; talk about anything you think would fit here. Your response must be <strong>300 to 400 words</strong>.</>}
+          description={
+            <>
+              You can discuss clubs, projects and organizations you have taken
+              part in; talk about anything you think would fit here. Your
+              response must be <strong>300 to 400 words</strong>.
+            </>
+          }
           requiredMessage="Please type a minimum of 5 sentences."
           placeholder="Type your response here..."
           minrows={7}
@@ -76,7 +84,7 @@ const page = () => {
           required
         />
 
-        <Input 
+        <Input
           label="Now that you've finished up the paperwork, enter your email below so that we can contact you."
           description="Who doesn't have an email in 2024?"
           requiredMessage="Please enter a valid email address."
@@ -85,14 +93,15 @@ const page = () => {
           required
         />
 
-        <Input 
+        <Input
           label="Do you have a personal website, GitHub, portfolio or LinkedIn? Link it to us and we'll check it out!"
           description="This is entirely optional and will not negatively affect your application."
           placeholder="linkedin.com/in/..."
         />
 
-        <Button className="mt-4" variant="surface">Submit Application</Button>
-
+        <Button className="mt-4" variant="surface" type="submit">
+          Submit Application
+        </Button>
       </form>
     </div>
   );
