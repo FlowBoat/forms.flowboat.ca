@@ -20,9 +20,9 @@ const page = () => {
           required
         />
 
-        <div>
+        <div className="flex flex-col gap-2">
           <label>What grade will you be entering in September 2024?</label>
-          <p className="text-sm text-neutral-400">All Flowboat members are high school students.</p>
+          <p className="text-sm text-neutral-40">All Flowboat members are high school students.</p>
           <Select.Root defaultValue="gr9" size="2">
             <Select.Trigger />
             <Select.Content>
