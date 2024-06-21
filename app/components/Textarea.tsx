@@ -52,7 +52,7 @@ const Textarea = (props: TextareaProps) => {
         }}
       />
       <p
-        className={`text-sm text-red-400 transition-all ${invalid ? "opacity-100 max-h-scroll" : "opacity-0 h-0"}`}
+        className={`text-xs text-red-400 transition-all ${invalid ? "opacity-100 max-h-scroll" : "opacity-0 h-0"}`}
       >
         {props.requiredMessage}
       </p>

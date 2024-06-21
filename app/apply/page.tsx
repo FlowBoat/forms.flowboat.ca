@@ -17,18 +17,79 @@ const page = () => {
   const [email, setEmail] = useState<string>("")
   const [link, setLink] = useState<string>("")
 
+  const [status, setStatus] = useState<"No Changes" | "Saving" | "Saved" | "Submitted">("No Changes")
+  const [statusColor, setStatusColor] = useState<"" | "text-red-400" | "text-yellow-400" | "text-blue-400" | "text-green-400" | "text-gray-400">("text-gray-400")
+
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    setStatus("Saving")
+
+    console.log(
+      name,
+      grade,
+      school,
+      reason,
+      skills,
+      idea,
+      source,
+      email,
+      link
+    )
+
+    setStatus("Saving")
+    setStatusColor("text-yellow-400")
+
+    setTimeout(() => {
+      localStorage.setItem("flowboat-application", JSON.stringify({
+        name,
+        grade,
+        school,
+        reason,
+        skills,
+        idea,
+        source,
+        email,
+        link
+      }))
+
+      setStatus("Saved")
+      setStatusColor("text-green-400")
+    }, 800)
+  }
+
+  const onChange = (e: React.FormEvent<HTMLFormElement>) => {
+    if (status !== "Saving") {
+      setStatus("Saving")
+      setStatusColor("text-yellow-400")
+
+      setTimeout(() => {
+        localStorage.setItem("flowboat-application", JSON.stringify({
+          name,
+          grade,
+          school,
+          reason,
+          skills,
+          idea,
+          source,
+          email,
+          link
+        }))
+
+        setStatus("Saved")
+        setStatusColor("text-green-400")
+      }, 800)
+    }
   }
 
   return (
-    <div className="max-w-[25rem] m-auto pt-16">
+    <div className="max-w-[25rem] m-auto py-16">
       <code className="text-neutral-400 text-sm">2024-2025</code>
       <h1 className="font-bold text-2xl">Flowboat Member Application</h1>
       <p>Accelerating the ideas of tomorrow.</p>
+      { status && <p className={`text-xs ${statusColor}`}>• {status}</p> }
 
-      <form className="flex flex-col gap-8 mt-8" onSubmit={onSubmit}>
+      <form className="flex flex-col gap-8 mt-8" onSubmit={onSubmit} onChange={onChange}>
         <Input
           label="What is your full name?"
           requiredMessage="We all have names, I think."
@@ -131,7 +192,7 @@ const page = () => {
           onChange={(e) => setLink(e.target.value)}
         />
 
-        <Button className="mt-4" variant="surface" type="submit">
+        <Button className="mt-4" variant="surface" type="submit" loading={status == "Saving"}>
           Submit Application
         </Button>
       </form>
