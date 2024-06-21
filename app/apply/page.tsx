@@ -1,18 +1,34 @@
 "use client";
 
-import React from "react";
+import { useState } from "react";
 import Input from "@/components/Input";
 import Textarea from "@/components/Textarea";
 import { Button, Select } from "@radix-ui/themes";
 
 const page = () => {
+
+  const [name, setName] = useState<string>("")
+  const [grade, setGrade] = useState<string>("")
+  const [school, setSchool] = useState<string>("")
+  const [reason, setReason] = useState<string>("")
+  const [skills, setSkills] = useState<string>("")
+  const [idea, setIdea] = useState<string>("")
+  const [source, setSource] = useState<string>("")
+  const [email, setEmail] = useState<string>("")
+  const [link, setLink] = useState<string>("")
+
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+  }
+
   return (
     <div className="max-w-[25rem] m-auto pt-16">
       <code className="text-neutral-400 text-sm">2024-2025</code>
       <h1 className="font-bold text-2xl">Flowboat Member Application</h1>
       <p>Accelerating the ideas of tomorrow.</p>
 
-      <form className="flex flex-col gap-8 mt-8">
+      <form className="flex flex-col gap-8 mt-8" onSubmit={onSubmit}>
         <Input
           label="What is your full name?"
           requiredMessage="We all have names, I think."
