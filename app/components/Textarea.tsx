@@ -8,6 +8,8 @@ interface TextareaProps {
   placeholder?: string;
   required?: boolean;
   requiredMessage?: string;
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
 const Textarea = (props: TextareaProps) => {
@@ -24,6 +26,8 @@ const Textarea = (props: TextareaProps) => {
 
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     e.preventDefault();
+
+    if (props.onChange) props.onChange(e);
 
     setInvalid(false);
   };
@@ -42,6 +46,7 @@ const Textarea = (props: TextareaProps) => {
         onInvalid={(e) => {
           onInvalid(e);
         }}
+        value={props.value}
         onChange={(e) => {
           onChange(e);
         }}

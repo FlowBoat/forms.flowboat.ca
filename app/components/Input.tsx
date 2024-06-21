@@ -8,6 +8,8 @@ interface InputProps {
   required?: boolean;
   requiredMessage?: string;
   type?: any;
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const Input = (props: InputProps) => {
@@ -24,6 +26,8 @@ const Input = (props: InputProps) => {
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
+
+    if (props.onChange) props.onChange(e);
 
     setInvalid(false);
   };
@@ -43,6 +47,7 @@ const Input = (props: InputProps) => {
         onInvalid={(e) => {
           onInvalid(e);
         }}
+        value={props.value}
         onChange={(e) => {
           onChange(e);
         }}

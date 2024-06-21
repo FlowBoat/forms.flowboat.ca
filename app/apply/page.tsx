@@ -8,7 +8,7 @@ import { Button, Select } from "@radix-ui/themes";
 const page = () => {
 
   const [name, setName] = useState<string>("")
-  const [grade, setGrade] = useState<string>("")
+  const [grade, setGrade] = useState<string>("Grade 9")
   const [school, setSchool] = useState<string>("")
   const [reason, setReason] = useState<string>("")
   const [skills, setSkills] = useState<string>("")
@@ -33,6 +33,8 @@ const page = () => {
           label="What is your full name?"
           requiredMessage="We all have names, I think."
           placeholder="You can call me..."
+          value={name}
+          onChange={(e) => setName(e.target.value)}
           required
         />
 
@@ -41,13 +43,13 @@ const page = () => {
           <p className="text-sm text-neutral-40">
             All Flowboat members are high school students.
           </p>
-          <Select.Root defaultValue="gr9" size="2">
+          <Select.Root defaultValue="Grade 9" size="2" value={grade} onValueChange={(e) => setGrade(e)}>
             <Select.Trigger />
             <Select.Content>
-              <Select.Item value="gr9">Grade 9</Select.Item>
-              <Select.Item value="gr10">Grade 10</Select.Item>
-              <Select.Item value="gr11">Grade 11</Select.Item>
-              <Select.Item value="gr12">Grade 12</Select.Item>
+              <Select.Item value="Grade 9">Grade 9</Select.Item>
+              <Select.Item value="Grade 10">Grade 10</Select.Item>
+              <Select.Item value="Grade 11">Grade 11</Select.Item>
+              <Select.Item value="Grade 12">Grade 12</Select.Item>
             </Select.Content>
           </Select.Root>
         </div>
@@ -57,6 +59,8 @@ const page = () => {
           description="All applying members must be located in the Waterloo Region."
           requiredMessage="School name is required."
           placeholder="I currently attend..."
+          value={school}
+          onChange={(e) => setSchool(e.target.value)}
           required
         />
 
@@ -66,6 +70,8 @@ const page = () => {
           requiredMessage="Please type a minimum of 5 sentences."
           placeholder="Type your response here..."
           minrows={3}
+          value={reason}
+          onChange={(e) => setReason(e.target.value)}
           required
         />
 
@@ -81,6 +87,8 @@ const page = () => {
           requiredMessage="Please type a minimum of 5 sentences."
           placeholder="Type your response here..."
           minrows={7}
+          value={skills}
+          onChange={(e) => setSkills(e.target.value)}
           required
         />
 
@@ -89,6 +97,8 @@ const page = () => {
           description="Anything! Don't worry if you think it isn't great."
           requiredMessage="Try to think of something!"
           placeholder="Only 0.3% of pitches..."
+          value={idea}
+          onChange={(e) => setIdea(e.target.value)}
           required
         />
 
@@ -97,6 +107,8 @@ const page = () => {
           description="Anything! Don't worry if you think it isn't great."
           requiredMessage="Try to think of something!"
           placeholder="My friend ... told me"
+          value={source}
+          onChange={(e) => setSource(e.target.value)}
           required
         />
 
@@ -106,6 +118,8 @@ const page = () => {
           requiredMessage="Please enter a valid email address."
           placeholder="member@flowboat.ca"
           type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           required
         />
 
@@ -113,6 +127,8 @@ const page = () => {
           label="Do you have a personal website, GitHub, portfolio or LinkedIn? Link it to us and we'll check it out!"
           description="This is entirely optional and will not negatively affect your application."
           placeholder="linkedin.com/in/..."
+          value={link}
+          onChange={(e) => setLink(e.target.value)}
         />
 
         <Button className="mt-4" variant="surface" type="submit">
