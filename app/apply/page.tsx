@@ -242,7 +242,7 @@ const Apply = () => {
           label="You're almost done! Please tell us about a cool startup idea you have in mind!"
           description="Anything! Don't worry if you think it isn't great."
           requiredMessage="Try to think of something!"
-          placeholder="Only 0.3% of pitches..."
+          placeholder="Automatic nose picker..."
           value={application.idea}
           required
         />
