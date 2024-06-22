@@ -1,7 +1,15 @@
+// app/api/write-to-sheet/route.ts
+
 import { NextRequest, NextResponse } from 'next/server';
 import { google } from 'googleapis';
+import { JWT } from 'google-auth-library';
 
-const keyFilePath = process.env.GOOGLE_SERVICE_ACCOUNT_KEY_PATH;
+const clientEmail = process.env.GOOGLE_CLIENT_EMAIL;
+const privateKey = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, '\n');
+
+if (!clientEmail || !privateKey) {
+  throw new Error('Missing Google client email or private key');
+}
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
@@ -10,13 +18,13 @@ export async function POST(req: NextRequest) {
   const values = Object.values(data);
 
   try {
-    // Authenticate with the Google Sheets API-
-    const auth = new google.auth.GoogleAuth({
-      keyFile: keyFilePath, // Use environment variable
+    // Authenticate with the Google Sheets API using JWT
+    const authClient = new google.auth.JWT({
+      email: clientEmail,
+      key: privateKey,
       scopes: ['https://www.googleapis.com/auth/spreadsheets'],
     });
 
-    const authClient = await auth.getClient();
     // Append data to the Google Sheet
     await google.sheets('v4').spreadsheets.values.append({
       auth: authClient,
@@ -46,13 +54,12 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    // Authenticate with the Google Sheets API
-    const auth = new google.auth.GoogleAuth({
-      keyFile: keyFilePath, // Use environment variable
+    // Authenticate with the Google Sheets API using JWT
+    const authClient = new google.auth.JWT({
+      email: clientEmail,
+      key: privateKey,
       scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly'],
     });
-
-    const authClient = await auth.getClient();
 
     // Retrieve data from the Google Sheet
     const response = await google.sheets('v4').spreadsheets.values.get({

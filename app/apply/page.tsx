@@ -18,7 +18,7 @@ interface Application {
   link: string;
 }
 
-const page = () => {
+const Apply = () => {
   const [application, setApplication] = useState<Application>({
     name: "",
     grade: "Grade 9",
@@ -290,7 +290,7 @@ const page = () => {
             you submit.{" "}
             <button
               className="font-bold"
-              type='button'
+              type="button"
               onClick={() => {
                 localStorage.setItem(
                   "flowboat-application",
@@ -329,4 +329,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Apply;
