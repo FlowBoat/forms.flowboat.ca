@@ -162,6 +162,9 @@ const Apply = () => {
         onSubmit={onSubmit}
         onChange={onChange}
         onBlur={onChange}
+        // onInvalid={(e) => {
+        //   toast.error("Please fill out all required fields.");
+        // }}
       >
         <Input
           label="What is your full name?"
@@ -250,7 +253,6 @@ const Apply = () => {
         <Input
           name="source"
           label="One last thing! How did you hear about Flowboat?"
-          description="Anything! Don't worry if you think it isn't great."
           requiredMessage="Try to think of something!"
           placeholder="My friend ... told me"
           value={application.source}
