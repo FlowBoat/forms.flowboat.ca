@@ -150,21 +150,21 @@ const Apply = () => {
 
   return (
     <div className="max-w-[25rem] m-auto py-16">
-      <Toaster richColors position="top-right" />
+      <Toaster richColors position="top-right" visibleToasts={7} />
       <code className="text-neutral-600 text-sm">2024-2025</code>
       <h1 className="font-bold text-2xl">Flowboat Member Application</h1>
       <p>Accelerating the ideas of tomorrow.</p>
       {status && <p className={`text-xs ${statusColor}`}>• {status}</p>}
 
-      {/* {name} */}
       <form
         className="flex flex-col gap-8 mt-8"
         onSubmit={onSubmit}
         onChange={onChange}
         onBlur={onChange}
-        // onInvalid={(e) => {
-        //   toast.error("Please fill out all required fields.");
-        // }}
+        onInvalid={(e: React.FormEvent<HTMLFormElement>) => {
+          const form = e.target as HTMLInputElement | HTMLTextAreaElement;
+          toast.error(`Please fill out the "${form.name}" field.`);
+        }}
       >
         <Input
           label="What is your full name?"
