@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Input from "@/components/Input";
 import Textarea from "@/components/Textarea";
 import { Button, Select } from "@radix-ui/themes";
+import { Toaster, toast } from 'sonner'
 
 interface Application {
   name: string;
@@ -31,6 +32,9 @@ const page = () => {
     link: "",
   });
 
+  const [status, setStatus] = useState<"No Changes" | "Saving" | "Saved" | "Submitted">("No Changes")
+  const [statusColor, setStatusColor] = useState<"" | "text-red-400" | "text-yellow-400" | "text-blue-400" | "text-green-400" | "text-gray-400">("text-gray-400")
+
   useEffect(() => {
     const savedApplication = localStorage.getItem('flowboat-application');
     if (savedApplication) {
@@ -38,8 +42,6 @@ const page = () => {
     }
   }, []);
 
-  const [status, setStatus] = useState<"No Changes" | "Saving" | "Saved" | "Submitted">("No Changes")
-  const [statusColor, setStatusColor] = useState<"" | "text-red-400" | "text-yellow-400" | "text-blue-400" | "text-green-400" | "text-gray-400">("text-gray-400")
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -47,12 +49,24 @@ const page = () => {
     setStatus("Saving")
     setStatusColor("text-yellow-400")
 
-    setTimeout(() => {
-      localStorage.setItem("flowboat-application", JSON.stringify(application))
+    try {
+      const response = await fetch(`/api/write-to-sheet?spreadsheetId=${process.env.NEXT_PUBLIC_APPLICATION_SHEET_ID}&range=A:Z`);
+      const data = await response.json();
 
-      setStatus("Saved")
-      setStatusColor("text-green-400")
-    }, 800)
+      if (response.ok) {
+        const emails = data.values.map((row: string[]) => row[7]);
+        if (emails.includes(application.email)) {
+          console.error('Error: Email already exists');
+          return false;
+        }
+      } else {
+        console.error('Error:', data.message);
+        return false;
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      return false;
+    }
 
     try {
       const response = await fetch('/api/append', {
@@ -60,7 +74,11 @@ const page = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(application),
+        body: JSON.stringify({
+          ...application,
+          spreadsheetId: process.env.NEXT_PUBLIC_APPLICATION_SHEET_ID,
+          range: "A:Z",
+        }),
       });
 
       if (response.ok) {
@@ -69,6 +87,9 @@ const page = () => {
         const errorData = await response.json();
         console.error(`Error: ${errorData.message}`);
       }
+
+      setStatus("Saved")
+      setStatusColor("text-green-400")
     } catch (error) {
       console.error('Error submitting form:', error);
     }
@@ -79,7 +100,6 @@ const page = () => {
     setStatusColor("text-yellow-400")
 
     const { name, value } = e.target as HTMLInputElement;
-    console.log(name)
 
     setApplication({
       ...application,
@@ -100,6 +120,10 @@ const page = () => {
       <h1 className="font-bold text-2xl">Flowboat Member Application</h1>
       <p>Accelerating the ideas of tomorrow.</p>
       { status && <p className={`text-xs ${statusColor}`}>• {status}</p> }
+      <Toaster />
+      <button onClick={() => toast('My first toast')}>
+        Give me a toast
+      </button>
 
       {/* {name} */}
       <form className="flex flex-col gap-8 mt-8" onSubmit={onSubmit} onChange={onChange} onBlur={onChange}>
@@ -117,7 +141,12 @@ const page = () => {
           <p className="text-sm text-neutral-40">
             All Flowboat members are high school students.
           </p>
-          <Select.Root name="grade" defaultValue="Grade 9" size="2" value={application.grade}> 
+          <Select.Root name="grade" onValueChange={(e) => {
+            setApplication({
+              ...application,
+              grade: e.toString(),
+            });
+          }} defaultValue="Grade 9" size="2" value={application.grade}> 
             <Select.Trigger />
             <Select.Content>
               <Select.Item value="Grade 9">Grade 9</Select.Item>
