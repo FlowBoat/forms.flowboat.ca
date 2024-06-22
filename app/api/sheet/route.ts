@@ -2,7 +2,6 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { google } from 'googleapis';
-import { JWT } from 'google-auth-library';
 
 const clientEmail = process.env.GOOGLE_CLIENT_EMAIL;
 const privateKey = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, '\n');
