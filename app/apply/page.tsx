@@ -33,7 +33,7 @@ const page = () => {
   });
 
   const [status, setStatus] = useState<"No Changes" | "Saving" | "Saved" | "Submitted">("No Changes")
-  const [statusColor, setStatusColor] = useState<"" | "text-red-400" | "text-yellow-400" | "text-blue-400" | "text-green-400" | "text-gray-400">("text-gray-400")
+  const [statusColor, setStatusColor] = useState<"" | "text-red-600" | "text-yellow-600" | "text-blue-600" | "text-green-600" | "text-gray-600">("text-gray-600")
 
   useEffect(() => {
     const savedApplication = localStorage.getItem('flowboat-application');
@@ -47,83 +47,103 @@ const page = () => {
     e.preventDefault();
 
     setStatus("Saving")
-    setStatusColor("text-yellow-400")
+    setStatusColor("text-yellow-600")
+
+    console.log('monkey1')
 
     try {
-      const response = await fetch(`/api/write-to-sheet?spreadsheetId=${process.env.NEXT_PUBLIC_APPLICATION_SHEET_ID}&range=A:Z`);
+      const response = await fetch(`/api/sheet?spreadsheetId=${process.env.NEXT_PUBLIC_APPLICATION_SHEET_ID}&range=A:Z`);
       const data = await response.json();
 
+      console.log('monkey2')
+
       if (response.ok) {
+
+        console.log('monkey3')
+
         const emails = data.values.map((row: string[]) => row[7]);
         if (emails.includes(application.email)) {
           console.error('Error: Email already exists');
-          return false;
+          toast.error('You\'ve already submitted an application! Try a different email.')
+        } else {
+
+          console.log('monkey4')
+
+          try {
+            const response = await fetch('/api/sheet', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                ...application,
+                spreadsheetId: process.env.NEXT_PUBLIC_APPLICATION_SHEET_ID,
+                range: "A:Z",
+              }),
+            });
+      
+            if (response.ok) {
+
+              console.log('monkey5')
+
+              console.log('Data written successfully');
+              toast.success('Application submitted successfully!')
+
+              localStorage.setItem("flowboat-application", JSON.stringify({
+                name: "",
+                grade: "Grade 9",
+                school: "",
+                reason: "",
+                skills: "",
+                idea: "",
+                source: "",
+                email: "",
+                link: "",            
+              }))
+            } else {
+              const errorData = await response.json();
+              console.error(`Error: ${errorData.message}`);
+              toast.error(`An error occurred: ${errorData.message}`)
+            }
+          } catch (error) {
+            console.error('Error submitting form:', error);
+            toast.error(`An error occurred: ${error}`)
+          }
         }
       } else {
         console.error('Error:', data.message);
-        return false;
+        toast.error(`An error occurred: ${data.message}`)
       }
     } catch (error) {
       console.error('Error fetching data:', error);
-      return false;
+      toast.error(`An error occurred: ${error}`)
     }
 
-    try {
-      const response = await fetch('/api/append', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          ...application,
-          spreadsheetId: process.env.NEXT_PUBLIC_APPLICATION_SHEET_ID,
-          range: "A:Z",
-        }),
-      });
-
-      if (response.ok) {
-        console.log('Data written successfully');
-      } else {
-        const errorData = await response.json();
-        console.error(`Error: ${errorData.message}`);
-      }
-
-      setStatus("Saved")
-      setStatusColor("text-green-400")
-    } catch (error) {
-      console.error('Error submitting form:', error);
-    }
+    setStatus("Saved")
+    setStatusColor("text-green-600")
   }
 
   const onChange = (e: React.FormEvent<HTMLFormElement>) => {
-    setStatus("Saving")
-    setStatusColor("text-yellow-400")
-
     const { name, value } = e.target as HTMLInputElement;
 
     setApplication({
       ...application,
       [name]: value,
     });
+    
+    localStorage.setItem("flowboat-application", JSON.stringify(application))
 
-    setTimeout(() => {
-      localStorage.setItem("flowboat-application", JSON.stringify(application))
-
-      setStatus("Saved")
-      setStatusColor("text-green-400")
-    }, 800)
+    setStatus("Saved")
+    setStatusColor("text-green-600")
   }
 
   return (
     <div className="max-w-[25rem] m-auto py-16">
-      <code className="text-neutral-400 text-sm">2024-2025</code>
+      <Toaster richColors position="top-right" />
+      <code className="text-neutral-600 text-sm">2024-2025</code>
       <h1 className="font-bold text-2xl">Flowboat Member Application</h1>
       <p>Accelerating the ideas of tomorrow.</p>
       { status && <p className={`text-xs ${statusColor}`}>• {status}</p> }
-      <Toaster />
-      <button onClick={() => toast('My first toast')}>
-        Give me a toast
-      </button>
 
       {/* {name} */}
       <form className="flex flex-col gap-8 mt-8" onSubmit={onSubmit} onChange={onChange} onBlur={onChange}>
@@ -234,9 +254,12 @@ const page = () => {
           value={application.link}
         />
 
-        <Button className="mt-4" variant="surface" type="submit" loading={status == "Saving"}>
-          Submit Application
-        </Button>
+        <div>
+          <Button className="mt-4 w-full" variant="surface" type="submit" loading={status == "Saving"}>
+            Submit Application
+          </Button>
+          <p className='mt-1 text-xs text-gray-400'>This form saves automatically, but your data will be cleared when you submit.</p>
+        </div>
       </form>
     </div>
   );
