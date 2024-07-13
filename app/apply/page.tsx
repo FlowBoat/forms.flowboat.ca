@@ -149,7 +149,7 @@ const Apply = () => {
   };
 
   return (
-    <div className="max-w-[25rem] m-auto py-16">
+    <div className="max-w-[26rem] m-auto py-16 px-4">
       <Toaster richColors position="top-right" visibleToasts={7} />
       <code className="text-neutral-600 text-sm">2024-2025</code>
       <h1 className="font-bold text-2xl">Flowboat Member Application</h1>
