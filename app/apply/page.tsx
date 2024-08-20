@@ -56,19 +56,13 @@ const Apply = () => {
     setStatus("Saving");
     setStatusColor("text-yellow-600");
 
-    console.log("monkey1");
-
     try {
       const response = await fetch(
         `/api/sheet?spreadsheetId=${process.env.NEXT_PUBLIC_APPLICATION_SHEET_ID}&range=A:Z`
       );
       const data = await response.json();
 
-      console.log("monkey2");
-
       if (response.ok) {
-        console.log("monkey3");
-
         const emails = data.values.map((row: string[]) => row[7]);
         if (emails.includes(application.email)) {
           console.error("Error: Email already exists");
@@ -76,7 +70,6 @@ const Apply = () => {
             "You've already submitted an application! Try a different email."
           );
         } else {
-          console.log("monkey4");
 
           try {
             const response = await fetch("/api/sheet", {
@@ -92,8 +85,6 @@ const Apply = () => {
             });
 
             if (response.ok) {
-              console.log("monkey5");
-
               console.log("Data written successfully");
               toast.success("Application submitted successfully!");
 
