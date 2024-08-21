@@ -5,9 +5,11 @@ import Input from "@/components/Input";
 import Textarea from "@/components/Textarea";
 import { Button, Select } from "@radix-ui/themes";
 import { Toaster, toast } from "sonner";
+import { timeStamp } from "console";
 
 interface Application {
   name: string;
+  timestamp: number | string;
   grade: string;
   school: string;
   reason: string;
@@ -21,6 +23,7 @@ interface Application {
 const Apply = () => {
   const [application, setApplication] = useState<Application>({
     name: "",
+    timestamp: 0,
     grade: "Grade 9",
     school: "",
     reason: "",
@@ -92,6 +95,7 @@ const Apply = () => {
                 "flowboat-application",
                 JSON.stringify({
                   name: "",
+                  timestamp: 0,
                   grade: "Grade 9",
                   school: "",
                   reason: "",
@@ -128,8 +132,10 @@ const Apply = () => {
   const onChange = (e: React.FormEvent<HTMLFormElement>) => {
     const { name, value } = e.target as HTMLInputElement;
 
+    const date = new Date();
     setApplication({
       ...application,
+      timestamp: date.toLocaleString(),
       [name]: value,
     });
 
@@ -289,6 +295,7 @@ const Apply = () => {
                   "flowboat-application",
                   JSON.stringify({
                     name: "",
+                    timestamp: 0,
                     grade: "Grade 9",
                     school: "",
                     reason: "",
@@ -301,6 +308,7 @@ const Apply = () => {
                 );
                 setApplication({
                   name: "",
+                  timestamp: 0,
                   grade: "Grade 9",
                   school: "",
                   reason: "",
