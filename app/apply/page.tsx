@@ -212,15 +212,15 @@ const Apply = () => {
         <Textarea
           name="reason"
           label="Why are you looking to be a part of Flowboat this year?"
-          description="Your response must be a minimum of 5 sentences."
-          requiredMessage="Please type a minimum of 5 sentences."
+          description="Your response must be a minimum of 4 sentences."
+          requiredMessage="Please type a minimum of 4 sentences."
           placeholder="Type your response here..."
           minrows={3}
           value={application.reason}
           required
         />
 
-        <Textarea
+        {/* <Textarea
           name="skills"
           label="What technological skills, business expertise or other valuable traits do you bring to the table? Explain your biggest accomplishments/experiences."
           description={
@@ -235,7 +235,7 @@ const Apply = () => {
           minrows={7}
           value={application.skills}
           required
-        />
+        /> */}
 
         <Input
           name="idea"
