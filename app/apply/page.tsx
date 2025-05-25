@@ -5,7 +5,6 @@ import Input from "@/components/Input";
 import Textarea from "@/components/Textarea";
 import { Button, Select } from "@radix-ui/themes";
 import { Toaster, toast } from "sonner";
-import { timeStamp } from "console";
 
 interface Application {
   name: string;
@@ -31,7 +30,7 @@ const Apply = () => {
     idea: "",
     source: "",
     email: "",
-    link: "",
+    link: ""
   });
 
   const [status, setStatus] = useState<
@@ -61,7 +60,7 @@ const Apply = () => {
 
     try {
       const response = await fetch(
-        `/api/sheet?spreadsheetId=${process.env.NEXT_PUBLIC_APPLICATION_SHEET_ID}&range=A:Z`
+        `/api/sheet?spreadsheetId=${process.env.NEXT_PUBLIC_2024_APPLICATION_SHEET_ID}&range=A:Z`
       );
       const data = await response.json();
 
@@ -73,18 +72,18 @@ const Apply = () => {
             "You've already submitted an application! Try a different email."
           );
         } else {
-
           try {
             const response = await fetch("/api/sheet", {
               method: "POST",
               headers: {
-                "Content-Type": "application/json",
+                "Content-Type": "application/json"
               },
               body: JSON.stringify({
                 ...application,
-                spreadsheetId: process.env.NEXT_PUBLIC_APPLICATION_SHEET_ID,
-                range: "A:Z",
-              }),
+                spreadsheetId:
+                  process.env.NEXT_PUBLIC_2024_APPLICATION_SHEET_ID,
+                range: "A:Z"
+              })
             });
 
             if (response.ok) {
@@ -103,7 +102,7 @@ const Apply = () => {
                   idea: "",
                   source: "",
                   email: "",
-                  link: "",
+                  link: ""
                 })
               );
             } else {
@@ -136,7 +135,7 @@ const Apply = () => {
     setApplication({
       ...application,
       timestamp: date.toLocaleString(),
-      [name]: value,
+      [name]: value
     });
 
     localStorage.setItem("flowboat-application", JSON.stringify(application));
@@ -182,7 +181,7 @@ const Apply = () => {
             onValueChange={(e) => {
               setApplication({
                 ...application,
-                grade: e.toString(),
+                grade: e.toString()
               });
             }}
             defaultValue="Grade 9"
@@ -303,7 +302,7 @@ const Apply = () => {
                     idea: "",
                     source: "",
                     email: "",
-                    link: "",
+                    link: ""
                   })
                 );
                 setApplication({
@@ -316,7 +315,7 @@ const Apply = () => {
                   idea: "",
                   source: "",
                   email: "",
-                  link: "",
+                  link: ""
                 });
                 toast.success("Data cleared successfully!");
               }}
