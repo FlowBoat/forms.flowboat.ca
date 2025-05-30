@@ -16,4 +16,6 @@ export type FormType = {
   description: string;
   link: string;
   fields: FieldType[];
+  sheetId: string | undefined;
+  range: string;
 };

@@ -3,17 +3,12 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  background-color: #1a1c1e;
-  color: #fff;
-}
-
 textarea {
   width: 100%;
   padding: 0.5rem;
-  border: 1px solid #D4D4D4;
+  border: 1px solid #d4d4d4;
   border-radius: 8px;
-  background-color: #FFF;
+  background-color: #fff;
   outline: none;
 }
 textarea:focus {
