@@ -4,7 +4,7 @@ export type FieldType = {
   description?: string;
   required: boolean;
   placeholder: string;
-  type: "input" | "textarea" | "select" | "radio" | "checkbox";
+  type: "input" | "textarea" | "select";
   requiredMessage?: string;
   options?: string[];
   validation?: (value: string) => boolean;
