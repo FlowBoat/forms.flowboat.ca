@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { google } from "googleapis";
 
-const clientEmail = process.env.GOOGLE_CLIENT_EMAIL;
-const privateKey = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, "\n");
+const clientEmail = env.GOOGLE_CLIENT_EMAIL;
+const privateKey = env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, "\n");
 
 if (!clientEmail || !privateKey) {
   throw new Error("Missing Google client email or private key");
