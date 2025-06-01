@@ -1,6 +1,6 @@
 "use client";
 
-import { forms } from "@/page";
+import { forms } from "@/(data)";
 import { useEffect, useState } from "react";
 import { toast, Toaster } from "sonner";
 import Input from "@/components/Input";
