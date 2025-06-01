@@ -11,4 +11,4 @@ This app is designed for easy DX, so that devs can add and customize new forms j
 * Add it to the `forms` array.
 * That's it
 
-## Environment Variables
+When adding a form, make sure that it's shared with editing priviledges to the Google Cloud Account that you're using. For Flowboat it's sheets-api@flowboat-forms.iam.gserviceaccount.com. Don't share this with anyone.
