@@ -15,7 +15,7 @@ const HomePage = () => {
       </p>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {forms.map((form) => (
-          <Link href={`/forms/apply`} key={form.name}>
+          <Link href={`/forms/${form.link}`} key={form.name}>
             <Card className="max-w-[20rem] hover:bg-gray-200 transition-colors">
               <code className="text-neutral-600 text-sm">{form.year}</code>
               <h2 className="font-bold">{form.name}</h2>

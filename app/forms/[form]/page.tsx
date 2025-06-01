@@ -11,7 +11,7 @@ import { Button, Select } from "@radix-ui/themes";
 const forms = [MemberApplication] as FormType[];
 
 export default function Page({ params }: { params: { form: string } }) {
-  const form = forms.find((f) => f.link === `/forms/${params.form}`);
+  const form = forms.find((f) => f.link === `${params.form}`);
 
   const [responses, setResponses] = useState<any>(null);
   const [status, setStatus] = useState<

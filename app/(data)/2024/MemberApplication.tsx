@@ -4,8 +4,8 @@ export const MemberApplication = new Form({
   name: "Flowboat Member Application",
   year: "2024-2025",
   description: "Accelerating the ideas of tomorrow.",
-  link: "/forms/apply",
-  sheetId: process.env.NEXT_PUBLIC_2024_APPLICATION_SHEET_ID,
+  link: "apply",
+  sheetId: "1LH_SylMKjJZ5uY47DSwsOOv1vhEhoqknjIAjhGKeBQQ",
   range: "A:Z",
   fields: [
     {
