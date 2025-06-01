@@ -1,9 +1,9 @@
 import { Card } from "@radix-ui/themes";
 import Link from "next/link";
 import Form from "@/form";
-import { MemberApplication as MemberApplication2024 } from "@/(data)/2024/MemberApplication";
+import { MemberApplication as MemberApplication2024 } from "@/(data)/";
 
-const forms = [MemberApplication2024] as Form[];
+export const forms = [MemberApplication2024] as Form[];
 
 const HomePage = () => {
   return (

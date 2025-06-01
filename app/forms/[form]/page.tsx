@@ -1,14 +1,11 @@
 "use client";
 
-import { FormType } from "@/types";
-import { MemberApplication } from "@/(data)/2024/MemberApplication";
+import { forms } from "@/page";
 import { useEffect, useState } from "react";
 import { toast, Toaster } from "sonner";
 import Input from "@/components/Input";
 import Textarea from "@/components/Textarea";
 import { Button, Select } from "@radix-ui/themes";
-
-const forms = [MemberApplication] as FormType[];
 
 export default function Page({ params }: { params: { form: string } }) {
   const form = forms.find((f) => f.link === `${params.form}`);
