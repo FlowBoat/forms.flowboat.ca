@@ -7,10 +7,11 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Forms | Flowboat",
-  description: "Flowboat is accelerating the ideas of tomorrow. Waterloo's very own start-up incubator for high school students.",
+  description:
+    "Flowboat is accelerating the ideas of tomorrow. Waterloo's very own start-up incubator for high school students.",
   icons: {
-    icon: '/flowboat-logo.png',
-  }
+    icon: "/flowboat-logo.png",
+  },
 };
 
 export default function RootLayout({
@@ -21,7 +22,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Theme radius="large" accentColor="indigo" grayColor="gray" hasBackground={true}>
+        <Theme
+          radius="large"
+          accentColor="indigo"
+          grayColor="gray"
+          hasBackground={true}
+        >
           {children}
         </Theme>
       </body>

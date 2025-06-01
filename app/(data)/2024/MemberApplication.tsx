@@ -14,7 +14,7 @@ export const MemberApplication = new Form({
       label: "What is your full name?",
       required: true,
       requiredMessage: "We all have names, I think.",
-      placeholder: "You can call me..."
+      placeholder: "You can call me...",
     },
     {
       type: "select",
@@ -24,7 +24,7 @@ export const MemberApplication = new Form({
       required: true,
       requiredMessage: "We all have grades, I think.",
       placeholder: "Select your grade",
-      options: ["Grade 9", "Grade 10", "Grade 11", "Grade 12"]
+      options: ["Grade 9", "Grade 10", "Grade 11", "Grade 12"],
     },
     {
       type: "input",
@@ -34,7 +34,7 @@ export const MemberApplication = new Form({
         "All applying members must be located in the Waterloo Region.",
       required: true,
       requiredMessage: "School name is required.",
-      placeholder: "I currently attend..."
+      placeholder: "I currently attend...",
     },
     {
       type: "textarea",
@@ -43,7 +43,7 @@ export const MemberApplication = new Form({
       description: "Your response must be a minimum of 4 sentences.",
       required: true,
       requiredMessage: "Please type a minimum of 4 sentences.",
-      placeholder: "Type your response here..."
+      placeholder: "Type your response here...",
     },
     {
       type: "input",
@@ -53,7 +53,7 @@ export const MemberApplication = new Form({
       description: "Anything! Don't worry if you think it isn't great.",
       required: true,
       requiredMessage: "Try to think of something!",
-      placeholder: "An AI-powered app that..."
+      placeholder: "An AI-powered app that...",
     },
     {
       type: "input",
@@ -61,7 +61,7 @@ export const MemberApplication = new Form({
       label: "One last thing! How did you hear about Flowboat?",
       required: true,
       requiredMessage: "Try to think of something!",
-      placeholder: "My friend ... told me"
+      placeholder: "My friend ... told me",
     },
     {
       type: "input",
@@ -74,7 +74,7 @@ export const MemberApplication = new Form({
       placeholder: "member@flowboat.ca",
       validation: (value) => {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-      }
+      },
     },
     {
       type: "input",
@@ -84,7 +84,7 @@ export const MemberApplication = new Form({
       description:
         "This is entirely optional and will not negatively affect your application.",
       required: false,
-      placeholder: "linkedin.com/in/..."
-    }
-  ]
+      placeholder: "linkedin.com/in/...",
+    },
+  ],
 });

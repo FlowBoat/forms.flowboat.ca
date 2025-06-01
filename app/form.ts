@@ -16,7 +16,7 @@ export default class Form implements FormType {
     link,
     sheetId,
     range,
-    fields
+    fields,
   }: FormType) {
     this.name = name;
     this.year = year;
