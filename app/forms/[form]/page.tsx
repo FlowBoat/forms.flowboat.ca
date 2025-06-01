@@ -1,4 +1,5 @@
 "use client";
+export const runtime = "edge";
 
 import { forms } from "@/(data)";
 import { useEffect, useState } from "react";
@@ -39,15 +40,15 @@ export default function Page({ params }: { params: { form: string } }) {
     setResponses((prev: any) => ({
       ...prev,
       timestamp: date.toLocaleString(),
-      [name]: value,
+      [name]: value
     }));
     localStorage.setItem(
       `flowboat-forms-${form.link}`,
       JSON.stringify({
         ...responses,
         timestamp: date.toLocaleString(),
-        [name]: value,
-      }),
+        [name]: value
+      })
     );
     setStatus("Saved");
     setStatusColor("text-green-600");
@@ -61,7 +62,7 @@ export default function Page({ params }: { params: { form: string } }) {
 
     try {
       const response = await fetch(
-        `/api/sheet?spreadsheetId=${form.sheetId}&range=A:Z`,
+        `/api/sheet?spreadsheetId=${form.sheetId}&range=A:Z`
       );
       const data = await response.json();
 
@@ -70,13 +71,13 @@ export default function Page({ params }: { params: { form: string } }) {
           const response = await fetch("/api/sheet", {
             method: "POST",
             headers: {
-              "Content-Type": "application/json",
+              "Content-Type": "application/json"
             },
             body: JSON.stringify({
               ...responses,
               spreadsheetId: form.sheetId,
-              range: "A:Z",
-            }),
+              range: "A:Z"
+            })
           });
 
           if (response.ok) {
@@ -87,9 +88,9 @@ export default function Page({ params }: { params: { form: string } }) {
               `flowboat-forms-${form.link}`,
               JSON.stringify({
                 ...form.fields.map((field) => ({
-                  [field.name]: "",
-                })),
-              }),
+                  [field.name]: ""
+                }))
+              })
             );
           } else {
             const errorData = await response.json();
@@ -163,7 +164,7 @@ export default function Page({ params }: { params: { form: string } }) {
                   onValueChange={(val) => {
                     setResponses((prev: any) => ({
                       ...prev,
-                      [field.name]: val,
+                      [field.name]: val
                     }));
                   }}
                   required={field.required}
@@ -208,14 +209,14 @@ export default function Page({ params }: { params: { form: string } }) {
                   `flowboat-forms-${form.link}`,
                   JSON.stringify({
                     ...form.fields.map((field) => ({
-                      [field.name]: "",
-                    })),
-                  }),
+                      [field.name]: ""
+                    }))
+                  })
                 );
                 setResponses({
                   ...form.fields.map((field) => ({
-                    [field.name]: "",
-                  })),
+                    [field.name]: ""
+                  }))
                 });
                 toast.success("Data cleared successfully!");
               }}
