@@ -1,5 +1,5 @@
 "use client";
-export const runtime = "edge";
+export const runtime = "nodejs";
 
 import { forms } from "@/(data)";
 import { useEffect, useState } from "react";
