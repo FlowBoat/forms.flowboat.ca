@@ -8,6 +8,7 @@ export default class Form implements FormType {
   fields: FieldType[];
   sheetId: string | undefined; // the id of the Google sheet. Get this from your Google sheet url ie. "1LH_SylMKjJZ5uY47DSwsOOv1vhEhoqknjIAjhGKeBQQ"
   range: string; // the range of the sheet ie. "A:Z". This is the range of the sheet that you want to use.
+  enabled: boolean; // whether the form is enabled (will have its own route/be accessible)
 
   constructor({
     name,
@@ -17,6 +18,7 @@ export default class Form implements FormType {
     sheetId,
     range,
     fields,
+    enabled
   }: FormType) {
     this.name = name;
     this.year = year;
@@ -25,5 +27,6 @@ export default class Form implements FormType {
     this.sheetId = sheetId;
     this.range = range;
     this.fields = fields;
+    this.enabled = enabled;
   }
 }

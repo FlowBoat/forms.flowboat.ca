@@ -111,6 +111,8 @@ export default function Page({ params }: { params: { form: string } }) {
     setStatusColor("text-green-600");
   };
 
+  if (!form || !form.enabled) return <div>Form not found</div>;
+
   return (
     <div className="max-w-[26rem] m-auto py-16 px-4">
       <Toaster richColors position="top-right" visibleToasts={7} />

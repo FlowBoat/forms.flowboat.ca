@@ -18,4 +18,5 @@ export type FormType = {
   fields: FieldType[];
   sheetId: string | undefined;
   range: string;
+  enabled: boolean;
 };
