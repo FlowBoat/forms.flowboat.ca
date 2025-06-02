@@ -77,7 +77,6 @@ export default function Page({ params }: { params: { form: string } }) {
       const response = await fetch(
         `/api/sheet?spreadsheetId=${form.sheetId}&range=A:Z`
       );
-      const data = await response.json();
 
       if (response.ok) {
         try {
