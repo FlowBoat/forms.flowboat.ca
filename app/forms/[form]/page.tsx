@@ -7,6 +7,7 @@ import { toast, Toaster } from "sonner";
 import Input from "@/components/Input";
 import Textarea from "@/components/Textarea";
 import { Button, Select } from "@radix-ui/themes";
+import Link from "next/link";
 
 export default function Page({ params }: { params: { form: string } }) {
   const form = forms.find((f) => f.link === `${params.form}`);
@@ -32,7 +33,19 @@ export default function Page({ params }: { params: { form: string } }) {
     }
   }, [form]);
 
-  if (!form) return <div>Form not found</div>;
+  if (!form || !form.enabled)
+    return (
+      <div className="max-w-[35rem] p-16">
+        <h1 className="font-bold text-2xl">Form not found</h1>
+        <p className="text-gray-500">
+          The form you are looking for is not available. Please contact us if
+          you think this is an error.{" "}
+          <Link href="/" className="font-bold underline">
+            Go back to the home page.
+          </Link>
+        </p>
+      </div>
+    );
 
   const onChange = (e: React.FormEvent<HTMLFormElement>) => {
     const { name, value } = e.target as HTMLInputElement | HTMLTextAreaElement;
@@ -110,8 +123,6 @@ export default function Page({ params }: { params: { form: string } }) {
     setStatus("Saved");
     setStatusColor("text-green-600");
   };
-
-  if (!form || !form.enabled) return <div>Form not found</div>;
 
   return (
     <div className="max-w-[26rem] m-auto py-16 px-4">
