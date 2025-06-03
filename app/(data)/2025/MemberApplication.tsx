@@ -2,12 +2,12 @@ import Form from "@/form";
 
 export const MemberApplication = new Form({
   name: "Flowboat Member Application",
-  year: "2024-2025",
+  year: "2025-2026",
   description: "Accelerating the ideas of tomorrow.",
-  link: "2024-member-application",
-  sheetId: "1LH_SylMKjJZ5uY47DSwsOOv1vhEhoqknjIAjhGKeBQQ",
+  link: "2025-member-application",
+  sheetId: "1cBDDqFOVYxYeOqT-SI2Ly3IQsqMuCA9bpLS18vLGsCM",
   range: "A:Z",
-  enabled: false,
+  enabled: true,
   fields: [
     {
       type: "input",
@@ -48,16 +48,6 @@ export const MemberApplication = new Form({
     },
     {
       type: "input",
-      name: "idea",
-      label:
-        "You're almost done! Please tell us about a cool startup idea you have in mind!",
-      description: "Anything! Don't worry if you think it isn't great.",
-      required: true,
-      requiredMessage: "Try to think of something!",
-      placeholder: "An AI-powered app that..."
-    },
-    {
-      type: "input",
       name: "source",
       label: "One last thing! How did you hear about Flowboat?",
       required: true,
@@ -83,7 +73,7 @@ export const MemberApplication = new Form({
       label:
         "Do you have a personal website, GitHub, portfolio or LinkedIn? Link it to us and we'll check it out!",
       description:
-        "This is entirely optional and will not negatively affect your application.",
+        "P.S. if you're attatching a resume, please add it with a google drive file, Thanks! This is also entirely optional.",
       required: false,
       placeholder: "linkedin.com/in/..."
     }
