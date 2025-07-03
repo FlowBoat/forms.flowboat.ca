@@ -20,7 +20,7 @@ export const MemberApplication = new Form({
     {
       type: "select",
       name: "grade",
-      label: "What grade will you be entering in September 2024?",
+      label: "What grade will you be entering in September 2025?",
       description: "All Flowboat members are high school students.",
       required: true,
       requiredMessage: "We all have grades, I think.",
@@ -59,7 +59,7 @@ export const MemberApplication = new Form({
       name: "email",
       label:
         "Now that you've finished up the paperwork, enter your email below so that we can contact you.",
-      description: "Who doesn't have an email in 2024?",
+      description: "Who doesn't have an email in 2025?",
       required: true,
       requiredMessage: "Please enter a valid email address.",
       placeholder: "member@flowboat.ca",
