@@ -7,7 +7,7 @@ export const MemberApplication = new Form({
   link: "2025-member-application",
   sheetId: "1cBDDqFOVYxYeOqT-SI2Ly3IQsqMuCA9bpLS18vLGsCM",
   range: "A:Z",
-  enabled: true,
+  enabled: false,
   fields: [
     {
       type: "input",
