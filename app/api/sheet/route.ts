@@ -73,8 +73,7 @@ function str2ab(str: string) {
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
-  const { spreadsheetId, range, ...data } = body;
-  const values = Object.values(data);
+  const { spreadsheetId, range, values } = body;
   try {
     const accessToken = await getAccessToken();
     const res = await fetch(

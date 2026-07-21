@@ -19,4 +19,5 @@ export type FormType = {
   sheetId: string | undefined;
   range: string;
   enabled: boolean;
+  columns?: string[]; // exact column order of the target sheet, ie. ["timestamp", "grade", "name", ...]. Defaults to ["timestamp", ...fields in declared order] if omitted.
 };

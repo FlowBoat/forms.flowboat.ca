@@ -8,6 +8,16 @@ export const MemberApplication = new Form({
   sheetId: "1W3CJt3pY9hBeflPhXXXH_v_4m8g_QwSQysj-zKGkiNg",
   range: "A:Z",
   enabled: true,
+  columns: [
+    "timestamp",
+    "grade",
+    "name",
+    "school",
+    "reason",
+    "source",
+    "email",
+    "link"
+  ],
   fields: [
     {
       type: "input",

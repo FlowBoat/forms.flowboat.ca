@@ -27,10 +27,17 @@ export default function Page({ params }: { params: { form: string } }) {
 
   useEffect(() => {
     if (!form) return;
+    const defaults = form.fields.reduce((acc: any, field) => {
+      if (field.type === "select" && field.options?.[0]) {
+        acc[field.name] = field.options[0];
+      }
+      return acc;
+    }, {});
     const savedResponses = localStorage.getItem(`flowboat-forms-${form.link}`);
-    if (savedResponses) {
-      setResponses(JSON.parse(savedResponses));
-    }
+    setResponses({
+      ...defaults,
+      ...(savedResponses ? JSON.parse(savedResponses) : {})
+    });
   }, [form]);
 
   if (!form || !form.enabled)
@@ -80,13 +87,18 @@ export default function Page({ params }: { params: { form: string } }) {
 
       if (response.ok) {
         try {
+          const timestamp = responses?.timestamp || new Date().toLocaleString();
+          const values = form.columns.map((column) =>
+            column === "timestamp" ? timestamp : responses?.[column] ?? ""
+          );
+
           const response = await fetch("/api/sheet", {
             method: "POST",
             headers: {
               "Content-Type": "application/json"
             },
             body: JSON.stringify({
-              ...responses,
+              values,
               spreadsheetId: form.sheetId,
               range: "A:Z"
             })
