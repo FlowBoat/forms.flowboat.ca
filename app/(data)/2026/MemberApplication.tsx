@@ -5,7 +5,7 @@ export const MemberApplication = new Form({
   year: "2026-2027",
   description: "Accelerating the ideas of tomorrow.",
   link: "2026-member-application",
-  sheetId: undefined, // TODO: create a new Google Sheet for 2026-2027 and paste its id here
+  sheetId: "1W3CJt3pY9hBeflPhXXXH_v_4m8g_QwSQysj-zKGkiNg",
   range: "A:Z",
   enabled: true,
   fields: [
